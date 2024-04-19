@@ -45,7 +45,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function sheduledClasses() {
+    public function scheduledClasses() {
         return $this->hasMany(ScheduledClass::class, 'instructor_id');
     }
 }
