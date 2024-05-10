@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\ClassCancelled;
+use App\Listeners\NotifyClassCancelled;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 Use Illuminate\Support\Facades\Gate;
 
@@ -28,5 +31,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('book-class', function(User $user) {
             return $user->role === 'member';
         });
+
+        Event::listen(
+            ClassCancelled::class,
+            NotifyClassCancelled::class
+        );
     }
 }

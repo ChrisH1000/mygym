@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClassCancelled;
 use App\Models\ClassType;
 use App\Models\ScheduledClass;
 use Illuminate\Http\Request;
@@ -59,7 +60,10 @@ class ScheduledClassController extends Controller
             abort(403);
         }
 
+        ClassCancelled::dispatch($schedule);
+
         $schedule->delete();
+        $schedule->members()->detach();
 
         return redirect()->route('schedule.index');
     }
